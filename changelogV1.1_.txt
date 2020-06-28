@@ -1,0 +1,23 @@
+---------------BgRemover_ChangelogV1.1_.txt-------------
+
+Added:
+    Now the program is fully funcitonal
+    you can add image and save the response image
+    the response image is resized for the windows automatically
+    
+
+Removed:
+    none
+Depricated:
+    none
+Fixed:
+    Upload Button Fixed
+    file upload/save now working
+    
+Not Fixed:
+    download button is still not fuctioning
+    exception handling is not done for the whole program
+
+Author/Developer: Navdeep Mishra
+Note: This program is currently in beta mode. You may face some unknown error or bugs while using it.
+
