@@ -3,7 +3,8 @@ from tkinter import *
 from tkinter.ttk import *
 from tkinter.filedialog import askopenfilename , asksaveasfilename
 from PIL import ImageTk , Image
-
+import tkinter.messagebox as tmsg
+import os
 class RmGui(Tk):
     
     def __init__(self):
@@ -16,8 +17,11 @@ class RmGui(Tk):
 
 
     def pic_loader(self):
+
         self.ipath= askopenfilename(filetypes=[('JPG Files','*.jpg'),('PNG Files','*.png'),('JPEG Files','*.jpeg')]) #,
         # print(self.ipath)
+        self.originalpath = self.ipath
+        self.originalpathsave()
         Img=self.picresizedpreview(self.ipath)
         self.rImage = ImageTk.PhotoImage(Img)
         # self.rImage.image = Img
@@ -35,6 +39,7 @@ class RmGui(Tk):
         
         self.picf2 = Frame(root,relief=SUNKEN,width=450)
         self.picf2.pack(side=RIGHT,anchor="ne",fill=BOTH)
+
     def picresizedpreview(self,imag):
         Img = Image.open(imag)
         oldwidth , oldheight = Img.size
@@ -79,6 +84,14 @@ class RmGui(Tk):
         self.bottomlabel()
         self.uploadbutton()
         self.downloadbutton()
+    def originalpathsave(self):
+        temppath  = self.originalpath.split('/')
+        self.originalpath = ""
+        for i in range(0,len(temppath)-1):
+            self.originalpath += temppath[i]+r'/'
+        print(self.originalpath)
+
+
     def pathupdater(self):
         trimmedpath = self.ipath.split('/')
         # print(trimmedpath)
@@ -87,39 +100,49 @@ class RmGui(Tk):
         for i in range(0,pathlength):
             if i == pathlength -1:
                 self.ipath += trimmedpath[i]
-                print(self.ipath)
+                # print(self.ipath)
                 break
             self.ipath += trimmedpath[i]+ r'\\'
-           
+            print(self.ipath)
     def uploadbuttonfunctionality(self):
         try:
             import requests
             self.pathupdater()
-            response = requests.post(
-                    'https://api.remove.bg/v1.0/removebg',
-                    files={'image_file': open(self.ipath, 'rb')},
-                    data={'size': 'auto'},
-                    headers={'X-Api-Key': 'Vt1fjLMNViXdjxvLmzMq3BpD'},
-                )
-            if response.status_code == requests.codes.ok:
-                newfilepath = self.downloadbuttonfunctionality()
-
-                with open(newfilepath, 'wb') as out:
-                    out.write(response.content)
+            
+            self.cstatus.set("Working on it. Please Wait....") 
+            self.sbar.update()
+            # response = requests.post(
+            #         'https://api.remove.bg/v1.0/removebg',
+            #         files={'image_file': open(self.ipath, 'rb')},
+            #         data={'size': 'auto'},
+            #         headers={'X-Api-Key': 'Vt1fjLMNViXdjxvLmzMq3BpD'},
+            #     )
+            # if response.status_code == requests.codes.ok:
+            #     print(os.getcwd())
+            #     newfilepath = self.downloadbuttonfunctionality()
+            #     print(os.getcwd())
+            #     with open(newfilepath, 'wb') as out:
+            #         out.write(response.content)
 
                 # self.nImage = newfilepath.split('/')
                 # for i in self.nImage:
                 #     self.nImage = i
                 # print(self.nImage)
-                self.nImage = newfilepath
-                self.piclabel2load()
+                # self.nImage = newfilepath
+                # self.piclabel2load()
+            import time as t
+            t.sleep(2)
+            self.cstatus.set("Done. Ready to Download")     
                 
-                
-            else:
-                print("Error:", response.status_code, response.text)
+    #         else:
+    #             # print("Error:", response.status_code, response.text)
+    #             tmsg.showinfo("Error",response.status_code)
+
         except requests.exceptions.ConnectionError:
-            print("Connection Refused")
-        
+            # print("Connection Refused")
+            tmsg.showinfo("Error","Connection Error")
+    # # def statuschanger():
+
     def downloadbuttonfunctionality(self):
         
         files = [  
@@ -140,31 +163,3 @@ if __name__=='__main__':
     # root.piclabel2load()    
     root.mainloop()
 
-
-# from tkinter import Label,Tk
-# from PIL import Image, ImageTk
-# from tkinter.filedialog import askopenfilename
-# root = Tk()
-
-# path=askopenfilename(filetypes=[("Image File",'.jpg')])
-# im = Image.open(path)
-# tkimage = ImageTk.PhotoImage(im)
-# myvar=Label(root,image = tkimage)
-# myvar.image = tkimage
-# myvar.pack()
-
-# root.mainloop()
-
-# import requests
-
-# response = requests.post(
-# 'https://api.remove.bg/v1.0/removebg',
-# files={'image_file': open('D:\\My Photos\\Nkm Pics\\test.jpg', 'rb')},
-# data={'size': 'auto'},
-# headers={'X-Api-Key': 'Vt1fjLMNViXdjxvLmzMq3BpD'},
-# )
-# if response.status_code == requests.codes.ok:
-#     with open('no-bgg.png', 'wb') as out:
-#         out.write(response.content)
-# else:
-#     print("Error:", response.status_code, response.text)
