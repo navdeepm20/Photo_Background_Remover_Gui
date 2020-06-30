@@ -4,6 +4,8 @@ from tkinter.ttk import *
 from tkinter.filedialog import askopenfilename , asksaveasfilename
 from PIL import ImageTk , Image
 import tkinter.messagebox as tmsg
+import requests
+import os.path
 import os
 class RmGui(Tk):
     
@@ -14,24 +16,36 @@ class RmGui(Tk):
         self.bottomframe = Frame(self,relief=SUNKEN,width=900,height=25)
         self.bottomframe.pack(fill=X,side=BOTTOM)
         self.picf1 = Frame(self,relief=SUNKEN,width=450)
+        self.minsize(900,600)
+        self.maxsize(900,600)
 
 
     def pic_loader(self):
 
         self.ipath= askopenfilename(filetypes=[('JPG Files','*.jpg'),('PNG Files','*.png'),('JPEG Files','*.jpeg')]) #,
-        # print(self.ipath)
-        self.originalpath = self.ipath
-        self.originalpathsave()
-        Img=self.picresizedpreview(self.ipath)
-        self.rImage = ImageTk.PhotoImage(Img)
-        # self.rImage.image = Img
-        self.piclabel1(self.rImage)
+        if os.path.exists(self.ipath):
+            self.originalpath = self.ipath
+            self.originaldirpathsave()
+            Img=self.picresizedpreview(self.ipath)
+            self.rImage = ImageTk.PhotoImage(Img)
+            # self.rImage.image = Img
+            self.piclabel1(self.rImage)  
+        else:
+            tmsg.showinfo("Error","File Open Action Aborted By the User")
+        
+        
        
     def topmenu(self):
         self.topmainmenu = Menu(self)
         self.topmainmenu.add_command(label="Open",command=self.pic_loader)
-        self.config(menu=self.topmainmenu)
+        self.topmainmenu.add_command(label="How to Start",command=self.howtostart)
+        self.topmainmenu.add_command(label="About",command=self.aboutloader)
 
+        self.config(menu=self.topmainmenu)
+    def aboutloader(self):
+        tmsg.showinfo("Message From Developer","This App is Created and Managed by Navdeep Mishra")
+    def howtostart(self):
+        tmsg.showinfo("How to Start","1)Click on Open and Select Your Desired Image\n2)Click On Upload Button (One Time Only and don't touch anything, just wait)\n3)A Window will popup automatically when everything is done, just save the file")
         
     def picframe1_2(self):
     
@@ -41,15 +55,17 @@ class RmGui(Tk):
         self.picf2.pack(side=RIGHT,anchor="ne",fill=BOTH)
 
     def picresizedpreview(self,imag):
-        Img = Image.open(imag)
-        oldwidth , oldheight = Img.size
-        # olddimension = (oldwidth,oldheight)
-        # self.oldpicsize = olddimension
-        newwidth=450
-        newheight = newwidth * oldheight//oldwidth
-        resized=(newwidth,newheight)
-        Img = Img.resize(resized)
-        return Img
+        try:
+            Img = Image.open(imag)
+            oldwidth , oldheight = Img.size
+            
+            newwidth=450
+            newheight = newwidth * oldheight//oldwidth
+            resized=(newwidth,newheight)
+            Img = Img.resize(resized)
+            return Img
+        except AttributeError as ee:
+            tmsg.showinfo("Error","File Open Action Aborted By the User")
 
     def piclabel2load(self):
         Img=self.picresizedpreview(self.nImage)
@@ -72,7 +88,7 @@ class RmGui(Tk):
 
         self.dwbt=Button(self.bottomframe,text="Download")
         self.dwbt.pack(side=LEFT,anchor="se")
-    # def imageresizer(self):
+   
 
     def bottomlabel(self):
         self.cstatus = StringVar()
@@ -83,65 +99,77 @@ class RmGui(Tk):
     def bottombarframe(self):
         self.bottomlabel()
         self.uploadbutton()
-        self.downloadbutton()
-    def originalpathsave(self):
+        # self.downloadbutton()
+    def originaldirpathsave(self):
         temppath  = self.originalpath.split('/')
         self.originalpath = ""
         for i in range(0,len(temppath)-1):
             self.originalpath += temppath[i]+r'/'
-        print(self.originalpath)
+       
 
 
     def pathupdater(self):
-        trimmedpath = self.ipath.split('/')
-        # print(trimmedpath)
-        self.ipath = ""
-        pathlength = len(trimmedpath)
-        for i in range(0,pathlength):
-            if i == pathlength -1:
-                self.ipath += trimmedpath[i]
-                # print(self.ipath)
-                break
-            self.ipath += trimmedpath[i]+ r'\\'
-            print(self.ipath)
+        try:
+            trimmedpath = self.ipath.split('/')
+            
+            self.ipath = ""
+            pathlength = len(trimmedpath)
+            for i in range(0,pathlength):
+                if i == pathlength -1:
+                    self.ipath += trimmedpath[i]
+                    
+                    break
+                self.ipath += trimmedpath[i]+ r'\\'
+        except AttributeError as e:
+           
+            self.cstatus.set("Ready")
+            self.sbar.update()
+
+            tmsg.showinfo("Error","Image path not Found")
+            
     def uploadbuttonfunctionality(self):
         try:
-            import requests
+            tmsg.showinfo("Message","Don't Double Press the button and Don't Drag the Application. Wait for AutoFile Save or until any Message pop up")
             self.pathupdater()
             
             self.cstatus.set("Working on it. Please Wait....") 
             self.sbar.update()
-            # response = requests.post(
-            #         'https://api.remove.bg/v1.0/removebg',
-            #         files={'image_file': open(self.ipath, 'rb')},
-            #         data={'size': 'auto'},
-            #         headers={'X-Api-Key': 'Vt1fjLMNViXdjxvLmzMq3BpD'},
-            #     )
-            # if response.status_code == requests.codes.ok:
-            #     print(os.getcwd())
-            #     newfilepath = self.downloadbuttonfunctionality()
-            #     print(os.getcwd())
-            #     with open(newfilepath, 'wb') as out:
-            #         out.write(response.content)
-
-                # self.nImage = newfilepath.split('/')
-                # for i in self.nImage:
-                #     self.nImage = i
-                # print(self.nImage)
-                # self.nImage = newfilepath
-                # self.piclabel2load()
-            import time as t
-            t.sleep(2)
-            self.cstatus.set("Done. Ready to Download")     
+            response = requests.post(
+                    'https://api.remove.bg/v1.0/removebg',
+                    files={'image_file': open(self.ipath, 'rb')},
+                    data={'size': 'auto'},
+                    headers={'X-Api-Key': 'Vt1fjLMNViXdjxvLmzMq3BpD'},
+                )
+            if response.status_code == requests.codes.ok:
                 
-    #         else:
-    #             # print("Error:", response.status_code, response.text)
-    #             tmsg.showinfo("Error",response.status_code)
+                newfilepath = self.downloadbuttonfunctionality()
+              
+                with open(newfilepath, 'wb') as out:
+                    out.write(response.content)
+
+                self.nImage = newfilepath.split('/')
+                
+                
+                self.nImage = newfilepath
+                self.piclabel2load()
+           
+                self.cstatus.set("File Saved Succesfully")     
+                
+            else:
+               
+                tmsg.showinfo("Error",response.status_code)
 
         except requests.exceptions.ConnectionError:
-            # print("Connection Refused")
+           
             tmsg.showinfo("Error","Connection Error")
-    # # def statuschanger():
+        except AttributeError as e:
+            tmsg.showinfo("Error","Open the Image in the image previewer first")
+        except FileNotFoundError:
+            tmsg.showinfo("Error","Open the Image in the image previewer first")
+            self.cstatus.set("Ready")
+            self.sbar.update()
+            
+   
 
     def downloadbuttonfunctionality(self):
         
@@ -152,14 +180,12 @@ class RmGui(Tk):
         return newfilepath    
 
         
-
+# //////////////////////////Program will Start From here.//////////////////////////////
 
 if __name__=='__main__':
     root = RmGui()
     root.topmenu()
-    root.bottombarframe()
-    
-    root.picframe1_2()
-    # root.piclabel2load()    
+    root.bottombarframe() 
+    root.picframe1_2()   
     root.mainloop()
 

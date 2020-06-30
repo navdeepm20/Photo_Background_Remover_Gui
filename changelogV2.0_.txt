@@ -1,0 +1,21 @@
+---------------BgRemover_ChangelogV2.0_.txt-------------
+
+Added:
+    Added How to start and About option in menu.
+
+Removed:
+    We have Removed Download button.
+
+Depricated:
+    none
+Fixed:
+    upload button exception fixed.
+    other exception fixed.
+
+    
+Not Fixed:
+    image position in the previewer change automatically.
+    
+Author/Developer: Navdeep Mishra
+Note: This program is currently in beta mode. You may face some unknown error or bugs while using it.
+
