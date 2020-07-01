@@ -1,0 +1,21 @@
+---------------BgRemover_ChangelogV2.1_.txt-------------
+
+Added:
+    Added new icon for the program.
+    Minor code improvements.
+    Stability Increased.
+
+Removed:
+    None
+
+Depricated:
+    None
+Fixed:
+    some minor bugs fixed.
+    
+Not Fixed:
+    None
+    
+Author/Developer: Navdeep Mishra
+Note: This program is Now in Stable mode. You may face some unknown error or bugs while using it, Please Report the Developer about it.
+

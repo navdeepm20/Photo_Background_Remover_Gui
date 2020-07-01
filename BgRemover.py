@@ -11,6 +11,8 @@ class RmGui(Tk):
     
     def __init__(self):
         super().__init__()
+        self.iconbitmap('main.ico')
+        print(os.getcwd())
         self.title("Bg_Remover")
         self.geometry("900x600")
         self.bottomframe = Frame(self,relief=SUNKEN,width=900,height=25)
@@ -18,12 +20,14 @@ class RmGui(Tk):
         self.picf1 = Frame(self,relief=SUNKEN,width=450)
         self.minsize(900,600)
         self.maxsize(900,600)
-
-
+        self.yourapikey = '' #paste the key inside the single quotes.
+       
+   
     def pic_loader(self):
 
         self.ipath= askopenfilename(filetypes=[('JPG Files','*.jpg'),('PNG Files','*.png'),('JPEG Files','*.jpeg')]) #,
         if os.path.exists(self.ipath):
+
             self.originalpath = self.ipath
             self.originaldirpathsave()
             Img=self.picresizedpreview(self.ipath)
@@ -57,10 +61,11 @@ class RmGui(Tk):
     def picresizedpreview(self,imag):
         try:
             Img = Image.open(imag)
-            oldwidth , oldheight = Img.size
-            
+            originalwidth , originalheight = Img.size
+            self.originalimagesize = (originalwidth,originalheight)
+            # print(self.originalimagesize)
             newwidth=450
-            newheight = newwidth * oldheight//oldwidth
+            newheight = newwidth * originalheight//originalwidth
             resized=(newwidth,newheight)
             Img = Img.resize(resized)
             return Img
@@ -131,19 +136,19 @@ class RmGui(Tk):
         try:
             
             if os.path.exists(self.ipath):
-                tmsg.showinfo("Message","Don't Double Press the button and Don't Drag the Application. Wait for AutoFile Save or until any Message pop up")
+                tmsg.showinfo("Important Message","Don't Double Press the button and Don't Drag the Application.If Application Shows not responding,Don't Worry application is still working in background just wait for AutoFile Save or until any Message pop up")
                 self.pathupdater()
-                
+             
                 self.cstatus.set("Working on it. Please Wait....") 
                 self.sbar.update()
                 response = requests.post(
                         'https://api.remove.bg/v1.0/removebg',
                         files={'image_file': open(self.ipath, 'rb')},
                         data={'size': 'auto'},
-                        headers={'X-Api-Key': 'Vt1fjLMNViXdjxvLmzMq3BpD'},
+                        headers={'X-Api-Key': self.yourapikey},
                     )
                 if response.status_code == requests.codes.ok:
-                    
+                   
                     newfilepath = self.downloadbuttonfunctionality()
                 
                     with open(newfilepath, 'wb') as out:
@@ -159,7 +164,9 @@ class RmGui(Tk):
                     
                 else:
                 
-                    tmsg.showinfo("Error",response.status_code)
+                    tmsg.showinfo("Error","Error Code: "+str(response.status_code))
+                    self.cstatus.set("Error Occured")
+                    self.sbar.update()
             else:
                 tmsg.showerror("Error","Image is not loaded into the Previewer.")
         except requests.exceptions.ConnectionError:
