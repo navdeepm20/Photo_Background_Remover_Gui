@@ -77,7 +77,7 @@ class RmGui(Tk):
 
     def piclabel1(self,rImage):  
         self.picLabel1 = Label(self.picf1,image=rImage)
-        self.picLabel1.pack()
+        self.picLabel1.pack(side=LEFT,anchor="nw")
 
     def uploadbutton(self): 
         self.supbt=Button(self.bottomframe,text="Upload",command=self.uploadbuttonfunctionality)
@@ -129,43 +129,46 @@ class RmGui(Tk):
             
     def uploadbuttonfunctionality(self):
         try:
-            tmsg.showinfo("Message","Don't Double Press the button and Don't Drag the Application. Wait for AutoFile Save or until any Message pop up")
-            self.pathupdater()
             
-            self.cstatus.set("Working on it. Please Wait....") 
-            self.sbar.update()
-            response = requests.post(
-                    'https://api.remove.bg/v1.0/removebg',
-                    files={'image_file': open(self.ipath, 'rb')},
-                    data={'size': 'auto'},
-                    headers={'X-Api-Key': 'Vt1fjLMNViXdjxvLmzMq3BpD'},
-                )
-            if response.status_code == requests.codes.ok:
+            if os.path.exists(self.ipath):
+                tmsg.showinfo("Message","Don't Double Press the button and Don't Drag the Application. Wait for AutoFile Save or until any Message pop up")
+                self.pathupdater()
                 
-                newfilepath = self.downloadbuttonfunctionality()
-              
-                with open(newfilepath, 'wb') as out:
-                    out.write(response.content)
+                self.cstatus.set("Working on it. Please Wait....") 
+                self.sbar.update()
+                response = requests.post(
+                        'https://api.remove.bg/v1.0/removebg',
+                        files={'image_file': open(self.ipath, 'rb')},
+                        data={'size': 'auto'},
+                        headers={'X-Api-Key': 'Vt1fjLMNViXdjxvLmzMq3BpD'},
+                    )
+                if response.status_code == requests.codes.ok:
+                    
+                    newfilepath = self.downloadbuttonfunctionality()
+                
+                    with open(newfilepath, 'wb') as out:
+                        out.write(response.content)
 
-                self.nImage = newfilepath.split('/')
+                    self.nImage = newfilepath.split('/')
+                    
+                    
+                    self.nImage = newfilepath
+                    self.piclabel2load()
+            
+                    self.cstatus.set("File Saved Succesfully")     
+                    
+                else:
                 
-                
-                self.nImage = newfilepath
-                self.piclabel2load()
-           
-                self.cstatus.set("File Saved Succesfully")     
-                
+                    tmsg.showinfo("Error",response.status_code)
             else:
-               
-                tmsg.showinfo("Error",response.status_code)
-
+                tmsg.showerror("Error","Image is not loaded into the Previewer.")
         except requests.exceptions.ConnectionError:
            
             tmsg.showinfo("Error","Connection Error")
         except AttributeError as e:
             tmsg.showinfo("Error","Open the Image in the image previewer first")
         except FileNotFoundError:
-            tmsg.showinfo("Error","Open the Image in the image previewer first")
+            tmsg.showinfo("Error","No Valid File Found. Open the Image in the image previewer first")
             self.cstatus.set("Ready")
             self.sbar.update()
             
