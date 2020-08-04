@@ -35,9 +35,9 @@
  
  # Error Codes Meaning
  
- > Code 400: Error: Invalid parameters or input file unprocessable (no credits charged)
- > Code 402: Error: Insufficient credits (no credits charged)
- > Code 403: Error: Authentication failed (no credits charged)
- > Code 429: Error: Rate limit exceeded (no credits charged)
+ > Code 400: Error: Invalid parameters or input file unprocessable (no credits charged)<br>
+ > Code 402: Error: Insufficient credits (no credits charged)<br>
+ > Code 403: Error: Authentication failed (no credits charged)<br>
+ > Code 429: Error: Rate limit exceeded (no credits charged)<br>
  
   
