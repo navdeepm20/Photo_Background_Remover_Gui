@@ -29,9 +29,9 @@
  
  # Other Information
  
- > The output of the Image is by default "png" format.
- > You must have your own unique api key to use this application.
- > This AI based remover work on almost all things. But sometimes, might be it not give you the desired result.
+ > The output of the Image is by default "png" format.<br>
+ > You must have your own unique api key to use this application.<br>
+ > This AI based remover work on almost all things. But sometimes, might be it not give you the desired result.<br>
  
  # Error Codes Meaning
  
