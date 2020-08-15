@@ -10,7 +10,7 @@
 <img src="https://img.shields.io/badge/Language-Python-brightgreen">
 <img src="https://img.shields.io/badge/Platform-Windows-blue">
 <img src="https://img.shields.io/badge/GUI-Tkinter-blueviolet">
-<img src="https://img.shields.io/badge/Version%20-2.1-ff69b4">
+<img src="https://img.shields.io/badge/Version-2.2-ff69b4">
 
 </p>
 
@@ -40,9 +40,10 @@
  > Code 403: Error: Authentication failed (no credits charged)<br>
  > Code 429: Error: Rate limit exceeded (no credits charged)<br>
  
- <h3>If you face any unknown error or bug please inform me</h3>
+ <h3>If you face any unknown error or bug please inform me or you can also do a pull request if you found and fixed any bug.</h3>
  <h3>Contribute to this project to improve this project. Lot's of new features can be implemented in this.</h3>
  <i> I have just created to know get the knowledge and to learn how the things are working behind the scenes. This is not a end user version of the application because it requires python(installed) and an api key. This is just for the developers to learn the new stuff.</i>
+ 
  
  <h3><i>Developer - Navdeep Mishra</i></h3>
  
