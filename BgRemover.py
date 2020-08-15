@@ -23,7 +23,7 @@ class RmGui(Tk):
         self.yourapikey = '' #paste the key inside the single quotes.
        
    
-    def pic_loader(self):
+    def pic_loader(self):          #Fuction to load picture inside the program
 
         self.ipath= askopenfilename(filetypes=[('JPG Files','*.jpg'),('PNG Files','*.png'),('JPEG Files','*.jpeg')]) #,
         if os.path.exists(self.ipath):
@@ -32,7 +32,7 @@ class RmGui(Tk):
             self.originaldirpathsave()
             Img=self.picresizedpreview(self.ipath)
             self.rImage = ImageTk.PhotoImage(Img)
-            # self.rImage.image = Img
+            
             self.piclabel1(self.rImage)  
         else:
             tmsg.showinfo("Error","File Open Action Aborted By the User")
@@ -44,26 +44,26 @@ class RmGui(Tk):
         self.topmainmenu.add_command(label="Open",command=self.pic_loader)
         self.topmainmenu.add_command(label="How to Start",command=self.howtostart)
         self.topmainmenu.add_command(label="About",command=self.aboutloader)
-
         self.config(menu=self.topmainmenu)
-    def aboutloader(self):
+
+    def aboutloader(self):        #about option method
         tmsg.showinfo("Message From Developer","This App is Created and Managed by Navdeep Mishra")
-    def howtostart(self):
+    def howtostart(self):         #how to start method
         tmsg.showinfo("How to Start","1)Click on Open and Select Your Desired Image\n2)Click On Upload Button (One Time Only and don't touch anything, just wait)\n3)A Window will popup automatically when everything is done, just save the file")
         
-    def picframe1_2(self):
+    def picframe1_2(self):            #pic1 frame packer and pic2 frame creater and packer method
     
         self.picf1.pack(side=LEFT,fill=BOTH,anchor="nw")
         
         self.picf2 = Frame(root,relief=SUNKEN,width=450)
         self.picf2.pack(side=RIGHT,anchor="ne",fill=BOTH)
 
-    def picresizedpreview(self,imag):
+    def picresizedpreview(self,imag):  
         try:
             Img = Image.open(imag)
             originalwidth , originalheight = Img.size
             self.originalimagesize = (originalwidth,originalheight)
-            # print(self.originalimagesize)
+            
             newwidth=450
             newheight = newwidth * originalheight//originalwidth
             resized=(newwidth,newheight)
@@ -72,7 +72,7 @@ class RmGui(Tk):
         except AttributeError as ee:
             tmsg.showinfo("Error","File Open Action Aborted By the User")
 
-    def piclabel2load(self):
+    def piclabel2load(self): #method that shows the picture inside frame
         Img=self.picresizedpreview(self.nImage)
         self.nImage = ImageTk.PhotoImage(Img)
 
@@ -80,22 +80,18 @@ class RmGui(Tk):
 
         self.piclabel2.pack()
 
-    def piclabel1(self,rImage):  
+    def piclabel1(self,rImage):  #method that shows the picture inside frame
         self.picLabel1 = Label(self.picf1,image=rImage)
         self.picLabel1.pack(side=LEFT,anchor="nw")
 
-    def uploadbutton(self): 
+    def uploadbutton(self):  
         self.supbt=Button(self.bottomframe,text="Upload",command=self.uploadbuttonfunctionality)
         self.supbt.pack(side=LEFT,anchor="se")
         
-    def downloadbutton(self):
-        
-
-        self.dwbt=Button(self.bottomframe,text="Download")
-        self.dwbt.pack(side=LEFT,anchor="se")
+    
    
 
-    def bottomlabel(self):
+    def bottomlabel(self):   #bottom status bar 
         self.cstatus = StringVar()
         self.cstatus.set("Ready")
         self.sbar = Label(self.bottomframe,textvariable=self.cstatus)
@@ -104,7 +100,7 @@ class RmGui(Tk):
     def bottombarframe(self):
         self.bottomlabel()
         self.uploadbutton()
-        # self.downloadbutton()
+    
     def originaldirpathsave(self):
         temppath  = self.originalpath.split('/')
         self.originalpath = ""
@@ -132,12 +128,12 @@ class RmGui(Tk):
 
             tmsg.showinfo("Error","Image path not Found")
             
-    def uploadbuttonfunctionality(self):
+    def uploadbuttonfunctionality(self):                #Fuctionality for the the upload button
         try:
             
             if os.path.exists(self.ipath):
                 tmsg.showinfo("Important Message","Don't Double Press the button and Don't Drag the Application.If Application Shows not responding,Don't Worry application is still working in background just wait for AutoFile Save or until any Message pop up")
-                self.pathupdater()
+                self.pathupdater()        
              
                 self.cstatus.set("Working on it. Please Wait....") 
                 self.sbar.update()
@@ -149,7 +145,7 @@ class RmGui(Tk):
                     )
                 if response.status_code == requests.codes.ok:
                    
-                    newfilepath = self.downloadbuttonfunctionality()
+                    newfilepath = self.downloadfunctionality()
                 
                     with open(newfilepath, 'wb') as out:
                         out.write(response.content)
@@ -181,7 +177,7 @@ class RmGui(Tk):
             
    
 
-    def downloadbuttonfunctionality(self):
+    def downloadfunctionality(self): 
         
         files = [  
                 ('Png Files', '*.png'), 
@@ -194,8 +190,8 @@ class RmGui(Tk):
 
 if __name__=='__main__':
     root = RmGui()
-    root.topmenu()
-    root.bottombarframe() 
-    root.picframe1_2()   
-    root.mainloop()
+    root.topmenu() #Calling the Menu creater Function
+    root.bottombarframe()  #Calling the Bottom bar Frame that contains the staus bar and upload button Funciton
+    root.picframe1_2()   #Calling Pic frame 1 and 2
+    root.mainloop() #Mainloop Funciton
 

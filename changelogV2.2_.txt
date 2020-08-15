@@ -4,6 +4,7 @@ Added:
     Added new icon for the program.
     Minor code improvements.
     Stability Increased.
+    
 
 Removed:
     None
