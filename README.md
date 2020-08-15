@@ -22,8 +22,8 @@
 
 # Sample and Result 
 <p align="center">
-  <img height="400x" width="300px" src="https://github.com/navdeepm20/Photo_Background_Remover_Gui/blob/master/sample/sample1.jpg">
-  <img height="400x" width="300px" src="https://github.com/navdeepm20/Photo_Background_Remover_Gui/blob/master/sample/removed.png">
+  <img height="425px" width="400px" src="https://github.com/navdeepm20/Photo_Background_Remover_Gui/blob/master/sample/sample1.jpg">
+  <img height="425px" width="400px" src="https://github.com/navdeepm20/Photo_Background_Remover_Gui/blob/master/sample/removed.png">
   
  </p>
  
@@ -33,7 +33,7 @@
  > You must have your own unique api key to use this application.<br>
  > This AI based remover work on almost all things. But sometimes, might be it not give you the desired result.<br>
  
- # Error Codes Meaning
+ # Error Codes Information
  
  > Code 400: Error: Invalid parameters or input file unprocessable (no credits charged)<br>
  > Code 402: Error: Insufficient credits (no credits charged)<br>
