@@ -1,4 +1,4 @@
----------------BgRemover_ChangelogV2.1_.txt-------------
+---------------BgRemover_ChangelogV2.2_.txt-------------
 
 Added:
     Added new icon for the program.
