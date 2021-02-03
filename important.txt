@@ -1,0 +1,1 @@
+Before using this software, please go to www.remove.bg and register yourself and get your own api key.
