@@ -18,7 +18,7 @@ class RmGui(Tk):
         self.picf1 = Frame(self,relief=SUNKEN,width=450)
         self.minsize(900,600)
         self.maxsize(900,600)
-        self.yourapikey = 'Vt1fjLMNViXdjxvLmzMq3BpD' #paste the key inside the single quotes.
+        self.yourapikey = 'CAdRsjrvLpy4Z7BLtgrvNNX5' #paste the key inside the single quotes. This is a demo key and it will not work.
        
    
     def pic_loader(self):          #Fuction to load picture inside the program
